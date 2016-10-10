@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AvtaleController {
 
-    private final Logger logger = LoggerFactory.getLogger(AvtaleController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AvtaleController.class);
 
     private final Fagsystem fagsystem = new Fagsystem(); // Fagsystem WS
     private final BrevTjeneste brevTjeneste = new BrevTjenesteImpl();
@@ -25,7 +25,7 @@ public class AvtaleController {
                                     @RequestParam(value="adresse") String adresse,
                                     @RequestParam(value="avtaleType") String avtaleType)
     {
-        logger.info("Oppretter " + avtaleType + "-avtale for kunde " + navn + " (" + adresse + ")");
+        LOG.info("Oppretter " + avtaleType + "-avtale for kunde " + navn + " (" + adresse + ")");
         String kundeNummer = fagsystem.opprettKunde(navn, adresse);
         String avtaleNummer = fagsystem.opprettAvtale(kundeNummer, avtaleType);
         Avtale avtale = new Avtale(kundeNummer, navn, adresse, avtaleNummer, avtaleType);
